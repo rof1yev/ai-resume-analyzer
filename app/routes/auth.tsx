@@ -11,16 +11,17 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Auth() {
-  const { isLoading, auth } = usePuterStore();
+  const { isLoading, auth, puterReady } = usePuterStore();
   const location = useLocation();
-  const next = location.search.split("next=")[1];
   const navigate = useNavigate();
+  const next = location.search.split("next=")[1] || "/";
 
   useEffect(() => {
+    if (!puterReady) return;
     if (auth.isAuthenticated && auth.user) {
       navigate(next || "/");
     }
-  }, [auth.isAuthenticated, auth.user, next]);
+  }, [auth.isAuthenticated, auth.user, puterReady, next]);
 
   return (
     <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-svh flex items-center justify-center">
