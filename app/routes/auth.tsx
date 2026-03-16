@@ -14,7 +14,7 @@ export default function Auth() {
   const { isLoading, auth, puterReady } = usePuterStore();
   const location = useLocation();
   const navigate = useNavigate();
-  const next = location.search.split("next=")[1] || "/";
+  const next = location.search.split("next=")[1];
 
   useEffect(() => {
     if (!puterReady) return;
