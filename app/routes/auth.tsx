@@ -21,7 +21,7 @@ export default function Auth() {
     if (auth.isAuthenticated && auth.user) {
       navigate(next || "/");
     }
-  }, [auth.isAuthenticated, auth.user, puterReady, next]);
+  }, [auth.isAuthenticated, auth.user, puterReady, next, navigate]);
 
   return (
     <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-svh flex items-center justify-center">
@@ -33,7 +33,10 @@ export default function Auth() {
           </div>
           <div>
             {isLoading ? (
-              <button className="auth-button animate-pulse">
+              <button
+                disabled
+                className="auth-button animate-pulse disabled:opacity-75 disabled:cursor-not-allowed"
+              >
                 <p>Signing you in ...</p>
               </button>
             ) : (

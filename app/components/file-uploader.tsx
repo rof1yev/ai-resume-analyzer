@@ -8,7 +8,9 @@ interface FileUploaderProps {
 
 const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: File[], rejectedFiles: any[]) => {
+      console.log("Accepted:", acceptedFiles);
+      console.log("Rejected:", rejectedFiles);
       const file = acceptedFiles[0] || null;
 
       onFileSelect?.(file);
@@ -26,8 +28,8 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
   const file = acceptedFiles[0] || null;
 
   return (
-    <div className="w-full gradient-border">
-      <div {...getRootProps()}>
+    <div className="w-full gradient-border" {...getRootProps()}>
+      <div className="">
         <input {...getInputProps()} />
 
         <div className="space-y-4 cursor-pointer">
@@ -58,7 +60,11 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
           ) : (
             <div>
               <div className="mx-auto w-16 h-16 flex items-center justify-center mb-2">
-                <img src="/icons/info.svg" alt="upload" className="size-20" />
+                <img
+                  src="/icons/info.svg"
+                  alt="upload"
+                  className="size-20 select-none"
+                />
               </div>
               <p className="text-lg text-gray-500">
                 <span className="font-semibold">Click to upload</span> or drag

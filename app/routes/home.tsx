@@ -22,6 +22,8 @@ export default function Home() {
     if (!auth.isAuthenticated) navigate("/auth?next=/");
   }, [auth.isAuthenticated, puterReady]);
 
+  console.log("auth.user", auth);
+
   return (
     <main className="bg-[url('/images/bg-main.svg')] bg-cover">
       <Navbar />

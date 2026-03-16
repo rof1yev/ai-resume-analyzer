@@ -241,19 +241,23 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }
   };
 
-  const init = (): void => {
+  const init = async (): Promise<void> => {
+    set({ isLoading: true, error: null });
+
     const puter = getPuter();
     if (puter) {
       set({ puterReady: true });
-      checkAuthStatus();
+      await checkAuthStatus();
+      set({ isLoading: false });
       return;
     }
 
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       if (getPuter()) {
         clearInterval(interval);
         set({ puterReady: true });
-        checkAuthStatus();
+        await checkAuthStatus();
+        set({ isLoading: false });
       }
     }, 100);
 
@@ -350,7 +354,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
           ],
         },
       ],
-      { model: "claude-sonnet-4" },
+      { model: "claude-sonnet-4" }, // claude-sonnet-3-7
     ) as Promise<AIResponse | undefined>;
   };
 
@@ -412,7 +416,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
   };
 
   return {
-    isLoading: true,
+    isLoading: false,
     error: null,
     puterReady: false,
     auth: {
