@@ -5,7 +5,7 @@ import FileUploader from "~/components/file-uploader";
 import { usePuterStore } from "~/lib/puter";
 import { useNavigate } from "react-router";
 import { convertPdfToImage } from "~/lib/pdf2img";
-import { generateUUID } from "~/lib/utilis";
+import { generateUUID } from "~/lib/utils";
 import { prepareInstructions } from "~/constants";
 
 export function meta({}: Route.MetaArgs) {
@@ -16,7 +16,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Upload() {
-  const { auth, isLoading, fs, ai, kv, puterReady } = usePuterStore();
+  const { auth, fs, ai, kv, puterReady } = usePuterStore();
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [statusText, setStatusText] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
@@ -88,6 +88,7 @@ export default function Upload() {
     setStatusText("Analysis complete, redirecting ...");
 
     console.log(data);
+    navigate(`/resume/${uuid}`);
   };
 
   const handleFileSelect = (file: File | null) => setFile(file);
